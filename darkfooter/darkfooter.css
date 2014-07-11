@@ -1,0 +1,9 @@
+#footer.dark {
+	background-color: #636363;
+	border-top: 5px solid rgba(0, 0, 0, 0.15);
+	color: #ccc;
+}
+
+#footer.dark a, #footer.dark a:visited {
+	color: #fff;
+}

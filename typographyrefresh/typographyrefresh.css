@@ -1,0 +1,7 @@
+#content.typography {
+	font-family: "Helvetica Neue", "Helvetica", "Nimbus Sans L", "Arial", "Liberation Sans", sans-serif;
+}
+
+#content.typography h1, #content.typography h2, #content.typography h3, #content.typography h4 {
+	font-family: Georgia, serif;
+}
