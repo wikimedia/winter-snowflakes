@@ -29,50 +29,53 @@
 		this.name = 'flowingtype';
 
 		// Set to true to force enable.
+		// Disables the ability for the user to toggle on or off.
+		// Will be set true by toggle/cookie in init process.
 		this.enabled = false;
 
 		// This is our init method. You want to call it on startup, after instantiation.
 		this.init = function() {
 
-			// Load flowtype.js
-			$("head").append( $('<script/>')
-									.attr('type', 'text/javascript')
-									.attr('src', 'snowflakes/flowingtype/flowtype.js')  );
+			if (!this.enabled) {
+				// Load flowtype.js
+				$("head").append( $('<script/>')
+										.attr('type', 'text/javascript')
+										.attr('src', 'snowflakes/flowingtype/flowtype.js')  );
+				var ourToggle = $('<li />');
+				var ourLink = $('<a />')
+							.html('Flowing Type: Turn On')
+							.click(function() {
+								if ( $('body').hasClass('rr_flowingtype') ) {
+									$('body').removeClass('rr_flowingtype');
+									$(this).html("Flowing Type: Turn On");
+									$.cookie('winterFlowingType', null, { expires: 0, path: '/' });
+									// Have to reload
+									location.reload(false);
+								} else {
+									$('body').addClass('rr_flowingtype');
+									$('#pagecontent').flowtype();
+									$(this).html("Flowing Type: Turn Off");
+									$.cookie('winterFlowingType', 'true', { expires:7, path: '/' });
+								}
+							});
+				if ($.cookie('winterFlowingType')) {
+					this.enabled = true;
+					ourLink.html("Flowing Type: Turn Off");
+				}		 
+				ourToggle.append(ourLink);
+				$('#toggleList').append(ourToggle);
+			}
 
-			var ourToggle = $('<li />');
-			var ourLink = $('<a />')
-			 			.html('Flowing Type: Turn On')
-			 			.click(function() {
-			 				if ( $('body').hasClass('rr_flowingtype') ) {
-								$('body').removeClass('rr_flowingtype');
-								$(this).html("Flowing Type: Turn On");
-								$.cookie('winterFlowingType', null, { expires: 0, path: '/' });
-								// Have to reload
-								location.reload(false);
-			 				} else {
-								$('body').addClass('rr_flowingtype');
-
-								$('#pagecontent').flowtype();
-
-								$(this).html("Flowing Type: Turn Off");
-								$.cookie('winterFlowingType', 'true', { expires:7, path: '/' });
-			 				}
-			 			});
-			if (($.cookie('winterFlowingType')) || (this.enabled)) {
-				this.enabled = true;
-				$('body').addClass('rr_flowingtype');
-				$('#pagecontent').flowtype();
-				ourLink.html("Flowing Type: Turn Off");
-			}		 
-			ourToggle.append(ourLink);
-
-			$('#toggleList').append(ourToggle);	
-		};	
+			if (this.enabled) {
+					$('body').addClass('rr_flowingtype');
+					$('#pagecontent').flowtype();
+			}
+		};
 
 		// This method is called when data is loaded and the page must be modified.
 		// Must exist; can be empty.
 		this.fireHandler = function() { };
-		
+
 		// Blow away cookies when called!  Must exist; can be empty.
 		this.clearCookies = function() {
 			$.cookie('winterFlowingType', null, { expires: 0, path: '/' });

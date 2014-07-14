@@ -31,38 +31,43 @@
 		this.name = 'darkfooter';
 
 		// Set to true to force enable.
+		// Disables the ability for the user to toggle on or off.
+		// Will be set true by toggle/cookie in init process.
 		this.enabled = true;
 
 		// This is our init method. You want to call it on startup, after instantiation.
 		this.init = function() {
-			var ourToggle = $('<li />');
-			var ourLink = $('<a />')
-						.html('Dark Footer: Turn On')
-						.click(function() {
-							if ($('#footer').hasClass('dark')) {
-								$('#footer').removeClass('dark');
-								$(this).html("Dark Footer: Turn On");
-								$.cookie('winterDarkFooter', null, { expires: 0, path: '/' });
-							} else {
-								$('#footer').addClass('dark');
-								$(this).html("Dark Footer: Turn Off");
-								$.cookie('winterDarkFooter', 'true', { expires:7, path: '/' });
-							}
-						});
-			if (($.cookie('winterDarkFooter')) || (this.enabled)) {
-				this.enabled = true;
+			if (!this.enabled) {
+				var ourToggle = $('<li />');
+				var ourLink = $('<a />')
+							.html('Dark Footer: Turn On')
+							.click(function() {
+								if ($('#footer').hasClass('dark')) {
+									$('#footer').removeClass('dark');
+									$(this).html("Dark Footer: Turn On");
+									$.cookie('winterDarkFooter', null, { expires: 0, path: '/' });
+								} else {
+									$('#footer').addClass('dark');
+									$(this).html("Dark Footer: Turn Off");
+									$.cookie('winterDarkFooter', 'true', { expires:7, path: '/' });
+								}
+							});
+				if ($.cookie('winterDarkFooter')) {
+					this.enabled = true;
+					ourLink.html("Dark Footer: Turn Off");
+				}		 
+				ourToggle.append(ourLink);
+				$('#toggleList').append(ourToggle);
+			}
+			if (this.enabled) {
 				$('#footer').addClass('dark');
-				ourLink.html("Dark Footer: Turn Off");
-			}		 
-			ourToggle.append(ourLink);
-
-			$('#toggleList').append(ourToggle);	
-		};	
+			}
+		};
 
 		// This method is called when data is loaded and the page must be modified.
 		// Must exist; can be empty.
 		this.fireHandler = function() { };
-		
+
 		// Blow away cookies when called!  Must exist; can be empty.
 		this.clearCookies = function() {
 			$.cookie('winterDarkFooter', null, { expires: 0, path: '/' });

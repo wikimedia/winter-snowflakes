@@ -25,43 +25,49 @@
 	});
 
 	var InnerToc = function() {
+		// Define our module name.
 		this.name = 'innertoc';
 
 		// Set to true to force enable.
+		// Disables the ability for the user to toggle on or off.
+		// Will be set true by toggle/cookie in init process.
 		this.enabled = true;
 
 		// This is our init method. You want to call it on startup, after instantiation.		
 		this.init = function() {
-			//<li><a>Inner ToC: Hide</a></li>
-			var ourToggle = $('<li />');
-			var ourLink = $('<a />')
-			 			.html('Inner ToC: Hide')
-			 			.click(function() {
-							if ($('#content').hasClass('notoc')) {
-								$('#content').removeClass('notoc');
-								$(this).html("Inner ToC: Hide");
-								$.cookie('winterNoToC', null, { expires: 0, path: '/' });
-							} else {
-								$(this).html("Inner ToC: Show");
-								$('#content').addClass('notoc');
-								$.cookie('winterNoToC', 'true', { expires:7, path: '/' });
-							}
-			 			});
 
-			if (($.cookie('winterNoToC')) || (this.enabled)) {
-				this.enabled = true;
+			if (!this.enabled) {
+				var ourToggle = $('<li />');
+				var ourLink = $('<a />')
+							.html('Inner ToC: Hide')
+							.click(function() {
+								if ($('#content').hasClass('notoc')) {
+									$('#content').removeClass('notoc');
+									$(this).html("Inner ToC: Hide");
+									$.cookie('winterNoToC', null, { expires: 0, path: '/' });
+								} else {
+									$(this).html("Inner ToC: Show");
+									$('#content').addClass('notoc');
+									$.cookie('winterNoToC', 'true', { expires:7, path: '/' });
+								}
+							});
+
+				if (($.cookie('winterNoToC')) || (this.enabled)) {
+					this.enabled = true;
+					ourLink.html("Inner ToC: Show");
+				}
+				ourToggle.append(ourLink);
+				$('#toggleList').append(ourToggle);
+			}
+			if (this.enabled) {
 				$('#content').addClass('notoc');
-				ourLink.html("Inner ToC: Show");
-			}		 
-			ourToggle.append(ourLink);
-
-			$('#toggleList').append(ourToggle);	
+			}
 		};
 
 		// This method is called when data is loaded and the page must be modified.
 		// Must exist; can be empty.
 		this.fireHandler = function() { };
-		
+
 		// Blow away cookies when called!
 		// Must exist; can be empty.
 		this.clearCookies = function() {

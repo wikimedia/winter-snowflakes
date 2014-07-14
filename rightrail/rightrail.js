@@ -31,34 +31,39 @@
 		this.name = 'rightrail';
 
 		// Set to true to force enable.
+		// Disables the ability for the user to toggle on or off.
+		// Will be set true by toggle/cookie in init process.
 		this.enabled = true;
 
 		// This is our init method. You want to call it on startup, after instantiation.
 		this.init = function() {
-			var ourToggle = $('<li />');
-			var ourLink = $('<a />')
-						.html('Right Rail: Turn On')
-						.click(function() {
-							if ($('#container').hasClass('rightbar')) {
-								$('#container').removeClass('rightbar');
-								$(this).html("Right Rail: Turn On");
-								$.cookie('winterRightRail', null, { expires: 0, path: '/' });
-								// force a reload
-								location.reload(false);
-			 				} else {
-								$.cookie('winterRightRail', 'true', { expires:7, path: '/' });
-								// force a reload
-								location.reload(false);
-							}
-						});
-			if (($.cookie('winterRightRail')) || (this.enabled)) {
-				this.enabled = true;
+			if (!this.enabled) {
+				var ourToggle = $('<li />');
+				var ourLink = $('<a />')
+							.html('Right Rail: Turn On')
+							.click(function() {
+								if ($('#container').hasClass('rightbar')) {
+									$('#container').removeClass('rightbar');
+									$(this).html("Right Rail: Turn On");
+									$.cookie('winterRightRail', null, { expires: 0, path: '/' });
+									// force a reload
+									location.reload(false);
+				 				} else {
+									$.cookie('winterRightRail', 'true', { expires:7, path: '/' });
+									// force a reload
+									location.reload(false);
+								}
+							});
+				if ($.cookie('winterRightRail')) {
+					this.enabled = true;
+					ourLink.html("Right Rail: Turn Off");
+				}
+				ourToggle.append(ourLink);
+				$('#toggleList').append(ourToggle);
+			}
+			if (this.enabled) {
 				$('#container').addClass('rightbar');
-				ourLink.html("Right Rail: Turn Off");
-			}		 
-			ourToggle.append(ourLink);
-			$('#toggleList').append(ourToggle);
-
+			}
 
 			// Now we add the sidebar.
 
@@ -117,14 +122,12 @@
 
 			// Final clear point.
 			$('#wsidebar').append( $('<br />').css('clear', 'both') );
-
 		};
-		
+
 		// Blow away cookies when called!  Must exist; can be empty.
 		this.clearCookies = function() {
 			$.cookie('winterRightRail', null, { expires: 0, path: '/' });
 		};
-
 
 		/**
 		 * PRIVATE METHODS
@@ -299,21 +302,6 @@
 										}); 
 					lBox.append(ex);
 				}
-
-				$('#wsidebar').append(lBox);
-			}
-		}
-
-		function doLanguagesOld() {
-
-			var $langHints = $('#langhints').clone(true, true);
-			var $langLists = $('#langlist').clone(true, true);
-
-			if ($langHints.length) {
-				$('#pagelanglink').remove(); // removes all lang things
-
-				var lBox = $('<div />').addClass('rr_box').addClass('rr_langs');
-				lBox.append($langHints);
 
 				$('#wsidebar').append(lBox);
 			}

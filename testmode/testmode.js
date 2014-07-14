@@ -32,12 +32,14 @@
 
 
 	var TestMode = function() {
+		// Define our module name
 		this.name = 'testmode';
+
+		// Define the test user name.
 		this.defaultUserName = 'Accedie';
 		
 		// This is our init method. You want to call it on startup, after instantiation.		
 		this.init = function () {
-
 			// Change some text on the welcome screen.
 			var welcomeText = "<p>This is an interactive prototype being used to test updates to the interface for Wikipedia. It is in progress and you may run into bugs or issues. Remember we're testing the system, not you, so have fun and try to act as you normally would on the site.</p><p>This is only a prototype, and nothing you do here will harm Wikipedia, or be saved by the system.</p><p>Please choose a user name to personalize your experience using the prototype:</p>";
 
