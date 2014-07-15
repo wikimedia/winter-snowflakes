@@ -53,7 +53,13 @@
 									location.reload(false);
 								} else {
 									$('body').addClass('rr_flowingtype');
-									$('#pagecontent').flowtype();
+									$('#pagecontent').flowtype({
+										minimum: 300,
+										maximum: 715,
+										minFont: 18,
+										maxFont: 24,
+										fontRatio: 30
+									});
 									$(this).html("Flowing Type: Turn Off");
 									$.cookie('winterFlowingType', 'true', { expires:7, path: '/' });
 								}
@@ -68,7 +74,13 @@
 
 			if (this.enabled) {
 					$('body').addClass('rr_flowingtype');
-					$('#pagecontent').flowtype();
+					$('#pagecontent').flowtype({
+						minimum: 300,
+						maximum: 715,
+						minFont: 18,
+						maxFont: 24,
+						fontRatio: 30
+					});
 			}
 		};
 
