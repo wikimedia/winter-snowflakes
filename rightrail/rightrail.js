@@ -94,7 +94,7 @@
 			if (!this.enabled ) return; // Don't make extra calls if not needed.
 
 
-			console.log("Firing right rail handlers");
+			//console.log("Firing right rail handlers");
 
 			/*
 			 * Each thing to slot is handled in its own subroutine to avoid muddying 
