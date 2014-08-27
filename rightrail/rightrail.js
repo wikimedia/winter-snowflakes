@@ -108,6 +108,9 @@
 			doCoordinates();
 			// Languages
 			doLanguages();
+
+			doMainPage();  // Special case the main page.
+
 			// infoboxes
 			/*
 			 * A problem with Infoboxes is that there can be several. It might be nice to grab
@@ -210,6 +213,47 @@
 				coBox.append($coClone);
 				$('#wsidebar').append(coBox);
 			}			
+		}
+
+		function doMainPage() {
+			if ($.winter.currentArticle != "Main Page") { return; }
+
+			// Portal links
+			var $tbClone = $('table#mp-topbanner').clone(true, true);
+			if ($tbClone.length) {
+				var cells = $tbClone.find('td:not(:first-child)');
+				var t = $('<table/>').addClass('rr_box').attr('id', 'rr_portalbox').append( $('<tbody/>').append( $('<tr/>').append(cells) ));
+				$('#wsidebar').append(t);
+				$('table#mp-topbanner').remove();
+			}
+
+			// table#mp-right - pull into sidebar
+			var $mpRClone = $('table#mp-right').clone(true, true);
+			if ($mpRClone.length) {
+				// Remove the old one.
+				$('table#mp-right').remove();
+				$('#wsidebar').append($mpRClone);
+			}
+
+			// Make the center column full-width now
+			var $mpLClone = $('table#mp-left').clone(true, true);
+			if ($mpLClone.length) {
+				// Remove the old one.
+				$('table#mp-left').remove();
+				$('table#mp-upper').replaceWith($mpLClone);
+			}
+
+			// Add the title of the featured article into the box.
+			var faLink = $('#mp-tfa b a, #mp-tfa i a').eq( 0 );
+			if (faLink.length) {
+				var h = $('<h3/>').html(faLink.attr('title'));
+				$('#mp-tfa').children('p').eq(0).prepend(h);
+			}
+
+			// Hide all the controls for the main page
+			$('#pagetitle').hide();
+			$('#actiontabcontainer').css('margin-top', '20px');
+
 		}
 
 		/**

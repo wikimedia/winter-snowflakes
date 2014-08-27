@@ -25,7 +25,7 @@
 	display: block;
 }
 
-.rr_box, #wsidebar .infobox, #wsidebar .vertical-navbox, #wsidebar .mbox-small {
+.rr_box, #wsidebar .infobox, #wsidebar .vertical-navbox, #wsidebar .mbox-small, #wsidebar table#mp-right  {
 	-webkit-box-shadow: 0px 3px 3px 0px rgba(50, 50, 50, 0.2);
 	-moz-box-shadow:    0px 3px 3px 0px rgba(50, 50, 50, 0.2);
 	box-shadow:         0px 3px 3px 0px rgba(50, 50, 50, 0.2);	
@@ -185,15 +185,53 @@
 	margin-top: 10px !important;
 	margin-bottom: 10px !important;
 }
+
+/** 
+ * Specialized code for enwiki Main Page
+ */
+
+#wsidebar table#mp-right {
+	background-color: #fff !important;
+	margin: 20px !important;
+	margin-right: 20px !important;
+	padding: 0px !important;
+	width: auto !important;
+	min-width: 300px;
+	float: none !important;
+	clear: both;
+	border: none !important;
+	display: block;
+}
+
+#rr_portalbox td {
+	padding: 0;
+}
+
+#rr_portalbox ul {
+	list-style-type: none;
+	font-size: 11pt !important;
+	margin: 0;
+}
+
+#mp-left, #mp-center, #mp-bottom, td.MainPageBG {
+	background: #fff !important;
+	border: none !important;
+}
+#mp-left h2, #mp-center h2, #mp-bottom h2, #wsidebar table#mp-right h2 {
+	border: none !important;
+}
+#mp-tfa h3 {
+	margin-top: 0;
+	font-size: 24pt;
+}
+
 /**
  * Responsive code.
  */
-
-@media screen and (min-width: 320px) and (max-width: 900px) {
+@media screen and (min-width: 320px) and (max-width: 700px) {
 	#container.rightbar #content {
-		margin-right: 15px !important;
+		margin-right: 0px !important;
 	}
-
 	#container.rightbar #footer {
 		margin-right: 0px !important;
 	}
@@ -201,14 +239,21 @@
 		display: none; /* goodbye */
 	}
 }
+@media screen and (min-width: 700px) and (max-width: 900px) {
+	#container.rightbar #content {
+		margin-right: 340px !important;
+	}
+	#container.rightbar #footer {
+		margin-right: -340px !important;
+	}
+}
 
 @media screen and (min-width: 900px) and (max-width: 1024px) {
 	#container.rightbar #content {
 		margin-right: 340px;
 	}
-
 	#container.rightbar #footer {
-		margin-right: -340px;
+		margin-right: -180px;
 	}
 }
 
