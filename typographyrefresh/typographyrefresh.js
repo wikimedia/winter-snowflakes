@@ -33,6 +33,9 @@
 		// Set to true to force enable.
 		this.enabled = true;
 
+		// A small set of languages to turn this on for.
+		this.allowedLangs = new Array('en', 'de', 'fr', 'es', 'it');
+
 		// This is our init method. You want to call it on startup, after instantiation.		
 		this.init = function() {
 
@@ -59,7 +62,13 @@
 				$('#toggleList').append(ourToggle);
 			}
 			if (this.enabled) {
-				$('#content').addClass('typography');
+				// Only turn on for a small set of languages
+				if ($.inArray($.winter.lang, this.allowedLangs) > -1) {
+					$('#content').addClass('typography');
+					console.log("Enabling typography refresh: " + $.winter.lang);
+				} else {
+					console.log("Typography refresh disabled: " + $.winter.lang);
+				}
 			}
 		};
 
